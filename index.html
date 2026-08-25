@@ -891,6 +891,7 @@ SUBHXEDITZ0 — Video Editor Portfolio
       <article class="work-card large reveal">
 
         <video
+  id="myVideo"
   src="./reel01.mp4"
   muted
   loop
@@ -898,8 +899,17 @@ SUBHXEDITZ0 — Video Editor Portfolio
   playsinline
   controls
   style="width:100%; height:100%; object-fit:cover;">
-        </video>
+</video>
 
+<script>
+  const video = document.getElementById("myVideo");
+
+  video.addEventListener("click", function () {
+    video.muted = false;
+    video.volume = 1;
+    video.play();
+  });
+</script>
         <div class="work-placeholder">
 
           <div class="play">
