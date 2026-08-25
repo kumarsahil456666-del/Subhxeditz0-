@@ -1,0 +1,1097 @@
+SUBHXEDITZ0 — Video Editor Portfolio
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SUBHXEDITZ0 — Video Editor</title>
+
+  <meta name="description"
+        content="SUBHXEDITZ0 — Video Editor, Motion Designer and Content Creator.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+  <style>
+    /* =========================
+       RESET
+    ========================= */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background: #050505;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img,
+    video {
+      max-width: 100%;
+      display: block;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+
+    /* =========================
+       CUSTOM CURSOR
+    ========================= */
+
+    .cursor {
+      position: fixed;
+      width: 12px;
+      height: 12px;
+      background: #fff;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform .15s ease, width .2s ease, height .2s ease;
+      mix-blend-mode: difference;
+    }
+
+    .cursor.big {
+      width: 42px;
+      height: 42px;
+    }
+
+
+    /* =========================
+       BACKGROUND
+    ========================= */
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .035;
+      z-index: 10;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+    }
+
+    .glow {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: rgba(255,255,255,.035);
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+    }
+
+
+    /* =========================
+       NAVBAR
+    ========================= */
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 24px 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      background: linear-gradient(
+        to bottom,
+        rgba(5,5,5,.9),
+        transparent
+      );
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: #888;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 34px;
+      list-style: none;
+      font-size: 13px;
+      font-weight: 600;
+      color: #aaa;
+    }
+
+    .nav-links a {
+      transition: .3s;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    .menu-btn {
+      display: none;
+      border: 0;
+      background: transparent;
+      color: white;
+      font-size: 26px;
+      cursor: pointer;
+    }
+
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 6% 80px;
+      overflow: hidden;
+    }
+
+    .hero .glow {
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1000px;
+    }
+
+    .eyebrow {
+      color: #888;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 4px;
+      margin-bottom: 25px;
+      animation: fadeUp .8s ease both;
+    }
+
+    .hero h1 {
+      font-size: clamp(55px, 11vw, 150px);
+      line-height: .86;
+      letter-spacing: -8px;
+      font-weight: 900;
+      text-transform: uppercase;
+      animation: fadeUp .9s .1s ease both;
+    }
+
+    .hero h1 span {
+      color: transparent;
+      -webkit-text-stroke: 1px #777;
+    }
+
+    .hero-description {
+      max-width: 560px;
+      margin: 35px auto;
+      color: #999;
+      font-size: 15px;
+      line-height: 1.8;
+      animation: fadeUp .9s .2s ease both;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      animation: fadeUp .9s .3s ease both;
+    }
+
+    .btn {
+      padding: 14px 24px;
+      border: 1px solid #333;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 700;
+      transition: .3s;
+    }
+
+    .btn.primary {
+      background: #fff;
+      color: #000;
+      border-color: #fff;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+    }
+
+    .scroll-text {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #555;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+
+    /* =========================
+       GENERAL SECTION
+    ========================= */
+
+    section {
+      padding: 130px 6%;
+      position: relative;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      margin-bottom: 55px;
+      gap: 30px;
+    }
+
+    .section-number {
+      color: #555;
+      font-size: 11px;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(40px, 7vw, 85px);
+      line-height: .9;
+      letter-spacing: -4px;
+      text-transform: uppercase;
+    }
+
+    .section-description {
+      max-width: 400px;
+      color: #777;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+
+    /* =========================
+       STATS
+    ========================= */
+
+    .stats {
+      border-top: 1px solid #1b1b1b;
+      border-bottom: 1px solid #1b1b1b;
+
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .stat {
+      padding: 50px 20px;
+      text-align: center;
+      border-right: 1px solid #1b1b1b;
+    }
+
+    .stat:last-child {
+      border-right: none;
+    }
+
+    .stat-number {
+      font-size: clamp(38px, 5vw, 70px);
+      font-weight: 800;
+      letter-spacing: -3px;
+    }
+
+    .stat-label {
+      color: #666;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 8px;
+    }
+
+
+    /* =========================
+       WORK
+    ========================= */
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .work-card {
+      position: relative;
+      overflow: hidden;
+      background: #111;
+      border: 1px solid #1c1c1c;
+      min-height: 420px;
+      cursor: pointer;
+    }
+
+    .work-card.large {
+      grid-column: span 2;
+      min-height: 520px;
+    }
+
+    .work-card video,
+    .work-placeholder {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .7s cubic-bezier(.2,.7,.2,1);
+    }
+
+    .work-card:hover video,
+    .work-card:hover .work-placeholder {
+      transform: scale(1.04);
+    }
+
+    .work-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at 50% 30%, #292929, #080808 65%);
+    }
+
+    .play {
+      width: 65px;
+      height: 65px;
+      border: 1px solid #555;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      transition: .3s;
+    }
+
+    .work-card:hover .play {
+      background: white;
+      color: black;
+      transform: scale(1.1);
+    }
+
+    .work-info {
+      position: absolute;
+      left: 25px;
+      right: 25px;
+      bottom: 22px;
+      z-index: 3;
+    }
+
+    .work-category {
+      color: #aaa;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+
+    .work-title {
+      font-size: 23px;
+      font-weight: 700;
+    }
+
+    .work-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        transparent 45%,
+        rgba(0,0,0,.9)
+      );
+    }
+
+
+    /* =========================
+       SERVICES
+    ========================= */
+
+    .services {
+      border-top: 1px solid #1b1b1b;
+    }
+
+    .service {
+      display: grid;
+      grid-template-columns: 80px 1fr 350px;
+      align-items: center;
+      gap: 30px;
+      padding: 35px 0;
+      border-bottom: 1px solid #1b1b1b;
+      transition: .4s;
+    }
+
+    .service:hover {
+      padding-left: 15px;
+    }
+
+    .service-number {
+      color: #555;
+      font-size: 12px;
+    }
+
+    .service h3 {
+      font-size: clamp(25px, 4vw, 45px);
+      font-weight: 600;
+      letter-spacing: -2px;
+    }
+
+    .service p {
+      color: #666;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+
+    /* =========================
+       ABOUT
+    ========================= */
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: center;
+    }
+
+    .about-text {
+      color: #888;
+      font-size: 17px;
+      line-height: 1.9;
+    }
+
+    .about-text strong {
+      color: #fff;
+    }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 30px;
+    }
+
+    .skill {
+      padding: 10px 15px;
+      border: 1px solid #252525;
+      border-radius: 100px;
+      color: #aaa;
+      font-size: 11px;
+    }
+
+    .about-box {
+      aspect-ratio: 1;
+      border: 1px solid #202020;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle, #181818, #060606 65%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-box::before {
+      content: "S";
+      font-size: 300px;
+      font-weight: 900;
+      color: #101010;
+      position: absolute;
+    }
+
+    .about-box span {
+      position: relative;
+      z-index: 2;
+      color: #777;
+      letter-spacing: 5px;
+      font-size: 11px;
+    }
+
+
+    /* =========================
+       CONTACT
+    ========================= */
+
+    .contact {
+      text-align: center;
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .contact .glow {
+      left: 50%;
+      top: 30%;
+      transform: translate(-50%, -50%);
+    }
+
+    .contact-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .contact h2 {
+      font-size: clamp(55px, 11vw, 150px);
+      line-height: .85;
+      letter-spacing: -7px;
+      text-transform: uppercase;
+    }
+
+    .contact h2 span {
+      color: transparent;
+      -webkit-text-stroke: 1px #555;
+    }
+
+    .contact-sub {
+      color: #777;
+      margin: 30px auto;
+      max-width: 500px;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .contact-link {
+      border: 1px solid #292929;
+      padding: 13px 20px;
+      border-radius: 100px;
+      font-size: 11px;
+      color: #aaa;
+      transition: .3s;
+    }
+
+    .contact-link:hover {
+      background: white;
+      color: black;
+      border-color: white;
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      padding: 30px 6%;
+      border-top: 1px solid #181818;
+      display: flex;
+      justify-content: space-between;
+      color: #555;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+
+    /* =========================
+       REVEAL ANIMATION
+    ========================= */
+
+    ..reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(35px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media(max-width: 800px) {
+
+      .cursor {
+        display: none;
+      }
+
+      nav {
+        padding: 20px 5%;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: 70px;
+        left: 5%;
+        right: 5%;
+
+        background: rgba(12,12,12,.97);
+        border: 1px solid #222;
+        padding: 25px;
+
+        flex-direction: column;
+        gap: 20px;
+
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-10px);
+        transition: .3s;
+      }
+
+      .nav-links.open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      .hero {
+        min-height: 90vh;
+        padding-top: 130px;
+      }
+
+      .hero h1 {
+        letter-spacing: -4px;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        max-width: 220px;
+        margin: auto;
+      }
+
+      section {
+        padding: 90px 5%;
+      }
+
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .stat {
+        border-right: none;
+        border-bottom: 1px solid #1b1b1b;
+      }
+
+      .stat:last-child {
+        border-bottom: none;
+      }
+
+      .work-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .work-card,
+      .work-card.large {
+        grid-column: span 1;
+        min-height: 390px;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 50px;
+      }
+
+      .about-box {
+        order: -1;
+      }
+
+      .service {
+        grid-template-columns: 45px 1fr;
+      }
+
+      .service p {
+        grid-column: 2;
+      }
+
+      .contact h2 {
+        letter-spacing: -4px;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <div class="noise"></div>
+  <div class="cursor"></div>
+
+
+  <!-- =========================
+       NAVIGATION
+  ========================== -->
+
+  <nav>
+
+    <a href="#home" class="logo">
+      SUBHX<span>EDITZ0</span>
+    </a>
+
+    <button class="menu-btn" id="menuBtn">
+      ☰
+    </button>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+  </nav>
+
+
+  <!-- =========================
+       HERO
+  ========================== -->
+
+  <header class="hero" id="home">
+
+    <div class="glow"></div>
+
+    <div class="hero-content">
+
+      <div class="eyebrow">
+        Video Editor • Motion Designer
+      </div>
+
+      <h1>
+        SUBHX<br>
+        <span>EDITZ0</span>
+      </h1>
+
+      <p class="hero-description">
+        I turn raw footage into engaging visual stories
+        with clean editing, motion graphics and cinematic
+        sound design.
+      </p>
+
+      <div class="hero-buttons">
+
+        <a href="#work" class="btn primary">
+          VIEW MY WORK
+        </a>
+
+        <a href="#contact" class="btn">
+          LET'S TALK
+        </a>
+
+      </div>
+
+    </div>
+
+    <div class="scroll-text">
+      Scroll to explore ↓
+    </div>
+
+  </header>
+
+
+  <!-- =========================
+       STATS
+  ========================== -->
+
+  <section class="stats reveal">
+
+    <div class="stat">
+      <div class="stat-number">2+</div>
+      <div class="stat-label">Years Editing</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-number">50+</div>
+      <div class="stat-label">Projects</div>
+    </div>
+
+    <div class="stat">
+      <div class="stat-number">100%</div>
+      <div class="stat-label">Creative Energy</div>
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       WORK
+  ========================== -->
+
+  <section id="work">
+
+    <div class="section-header reveal">
+
+      <div>
+        <div class="section-number">01 — Selected Work</div>
+
+        <h2 class="section-title">
+          My<br>Work
+        </h2>
+      </div>
+
+      <p class="section-description">
+        A selection of edits focused on storytelling,
+        retention, motion design and visual impact.
+      </p>
+
+    </div>
+
+
+    <div class="work-grid">
+
+
+      <!-- CARD 1 -->
+
+      <article class="work-card large reveal">
+
+        <!--
+          Replace this placeholder with your video:
+
+          <video src="videos/video1.mp4"
+                 muted
+                 loop
+                 playsinline></video>
+        -->
+
+        <div class="work-placeholder">
+
+          <div class="play">
+            ▶
+          </div>
+
+        </div>
+
+        <div class="work-overlay"></div>
+
+        <div class="work-info">
+
+          <div class="work-category">
+            01 / Short Form
+          </div>
+
+          <div class="work-title">
+            High Retention Reel
+          </div>
+
+        </div>
+
+      </article>
+
+
+      <!-- CARD 2 -->
+
+      <article class="work-card reveal">
+
+        <div class="work-placeholder">
+
+          <div class="play">
+            ▶
+          </div>
+
+        </div>
+
+        <div class="work-overlay"></div>
+
+        <div class="work-info">
+
+          <div class="work-category">
+            02 / Talking Head
+          </div>
+
+          <div class="work-title">
+            Talking Head Edit
+          </div>
+
+        </div>
+
+      </article>
+
+
+      <!-- CARD 3 -->
+
+      <article class="work-card reveal">
+
+        <div class="work-placeholder">
+
+          <div class="play">
+            ▶
+          </div>
+
+        </div>
+
+        <div class="work-overlay"></div>
+
+        <div class="work-info">
+
+          <div class="work-category">
+            03 / Motion Design
+          </div>
+
+          <div class="work-title">
+            Motion Graphics
+          </div>
+
+        </div>
+
+      </article>
+
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       SERVICES
+  ========================== -->
+
+  <section id="services" class="services">
+
+    <div class="section-header reveal">
+
+      <div>
+        <div class="section-number">02 — What I Do</div>
+
+        <h2 class="section-title">
+          Services
+        </h2>
+      </div>
+
+    </div>
+
+
+    <div class="service reveal">
+
+      <div class="service-number">01</div>
+
+      <h3>Short Form Editing</h3>
+
+      <p>
+        Reels, Shorts and TikTok edits designed
+        for strong retention and fast-paced storytelling.
+      </p>
+
+    </div>
+
+
+    <div class="service reveal">
+
+      <div class="service-number">02</div>
+
+      <h3>Motion Graphics</h3>
+
+      <p>
+        Modern typography, transitions, graphic
+        animations and visual effects.
+      </p>
+
+    </div>
+
+
+    <div class="service reveal">
+
+      <div class="service-number">03</div>
+
+      <h3>Sound Design</h3>
+
+      <p>
+        Impactful sound effects, audio transitions
+        and music synchronization.
+      </p>
+
+    </div>
+
+
+    <div class="service reveal">
+
+      <div class="service-number">04</div>
+
+      <h3>Color & Grade</h3>
+
+      <p>
+        Clean color correction and cinematic
+        color grading to give every frame character.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       ABOUT
+  ========================== -->
+
+  <section id="about">
+
+    <div class="section-header reveal">
+
+      <div>
+
+        <div class="section-number">
+          03 — About Me
+        </div>
+
+        <h2 class="section-title">
+          About
+        </h2>
+
+      </div>
+
+    </div>
+
+
+    <div class="about-grid">
+
+
+      <div class="about-text reveal">
+
+        <p>
+          I'm <strong>Sahil</strong>, the editor behind
+          <st
